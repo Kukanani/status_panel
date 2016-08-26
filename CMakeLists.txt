@@ -3,7 +3,7 @@ list( APPEND CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}")
 
 # PACKAGE SETUP ########################################
 
-project(status_logger)
+project(status_panel)
 
 catkin_package(
   INCLUDE_DIRS include
