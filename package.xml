@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package>
+  <name>status_panel</name>
+  <version>0.0.1</version>
+  <description>Displays global status messages in RViz.</description>
+  <maintainer email="allevato@utexas.edu">Adam Allevato</maintainer>
+
+  <license>Proprietary</license>
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>rviz</build_depend>
+  <run_depend>rviz</run_depend>
+
+  <build_depend>std_msgs</build_depend>
+  <run_depend>std_msgs</run_depend>
+
+  <export>
+      <rviz plugin="${prefix}/plugin_description.xml"/>
+  </export>
+</package>

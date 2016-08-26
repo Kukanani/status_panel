@@ -1,0 +1,10 @@
+<library path="lib/libstatus_panel">
+  <class name="Status"
+         type="StatusPanel"
+         base_class_type="rviz::Panel">
+    <description>
+      A simple panel to display info messages to the user.
+    </description>
+  </class>
+</library>
+
