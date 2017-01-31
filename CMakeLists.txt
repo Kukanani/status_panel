@@ -5,15 +5,15 @@ list( APPEND CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}")
 
 project(status_panel)
 
+find_package(catkin REQUIRED COMPONENTS std_msgs roscpp)
+find_package(Qt4 COMPONENTS QtCore QtGui REQUIRED)
+
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES ${PROJECT_NAME}
   CATKIN_DEPENDS rviz std_msgs
   DEPENDS yaml-cpp
 )
-
-find_package(catkin REQUIRED COMPONENTS std_msgs roscpp)
-find_package(Qt4 COMPONENTS QtCore QtGui REQUIRED)
 
 # QT ########################################
 
