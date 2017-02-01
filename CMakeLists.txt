@@ -30,7 +30,7 @@ include_directories(
 FILE(GLOB HFILES include/${PROJECT_NAME}/*.h)
 FILE(GLOB CPPFILES src/*.cpp)
 qt4_wrap_cpp(MOC_FILES
-  ${HFILES}
+  include/${PROJECT_NAME}/status_panel.h
 )
 set(SOURCE_FILES
   ${CPPFILES}
