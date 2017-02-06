@@ -31,9 +31,11 @@
 #ifndef STATUS_PANEL_H
 #define STATUS_PANEL_H
 
+#ifndef Q_MOC_RUN
 #include <ros/ros.h>
 #include <std_msgs/String.h>
 #include <rviz/panel.h>
+#endif
 
 class QLineEdit;
 class QLabel;
