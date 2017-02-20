@@ -40,6 +40,8 @@
 class QLineEdit;
 class QLabel;
 
+namespace status_panel {
+
 class StatusPanel: public rviz::Panel
 {
 Q_OBJECT
@@ -73,6 +75,8 @@ protected:
   ros::NodeHandle nh;
 
 };
+
+} // end namespace
 
 #endif
 

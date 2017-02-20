@@ -41,6 +41,8 @@
 
 #include <geometry_msgs/Twist.h>
 
+namespace status_panel {
+
 StatusPanel::StatusPanel( QWidget* parent ) :
   rviz::Panel( parent ),
   input_topic("/status")
@@ -112,8 +114,11 @@ void StatusPanel::message_cb(std_msgs::String msg)
   setMessage(QString(msg.data.c_str()));
 }
 
+
+} // end namespace
+
 // Tell pluginlib about this class.  Every class which should be
 // loadable by pluginlib::ClassLoader must have these two lines
 // compiled in its .cpp file, outside of any namespace scope.
 #include <pluginlib/class_list_macros.h>
-PLUGINLIB_EXPORT_CLASS(StatusPanel,rviz::Panel )
+PLUGINLIB_EXPORT_CLASS(status_panel::StatusPanel,rviz::Panel )

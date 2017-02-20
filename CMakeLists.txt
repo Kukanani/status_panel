@@ -5,21 +5,37 @@ list( APPEND CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}")
 
 project(status_panel)
 
-find_package(catkin REQUIRED COMPONENTS std_msgs roscpp)
-find_package(Qt4 COMPONENTS QtCore QtGui REQUIRED)
+find_package(catkin REQUIRED COMPONENTS std_msgs roscpp rviz)
 
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES ${PROJECT_NAME}
-  CATKIN_DEPENDS rviz std_msgs
+  CATKIN_DEPENDS std_msgs
   DEPENDS yaml-cpp
 )
 
 # QT ########################################
 
-include(${QT_USE_FILE})
-add_definitions(-DQT_NO_KEYWORDS)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+## This plugin includes Qt widgets, so we must include Qt.
+## We'll use the version that rviz used so they are compatible.
+if(rviz_QT_VERSION VERSION_LESS "5")
+  message(STATUS "Using Qt4 based on the rviz_QT_VERSION: ${rviz_QT_VERSION}")
+  find_package(Qt4 ${rviz_QT_VERSION} EXACT REQUIRED QtCore QtGui)
+  ## pull in all required include dirs, define QT_LIBRARIES, etc.
+  include(${QT_USE_FILE})
+  qt4_wrap_cpp(QT_MOC include/status_panel/status_panel.h)
+else()
+  message(STATUS "Using Qt5 based on the rviz_QT_VERSION: ${rviz_QT_VERSION}")
+  find_package(Qt5 ${rviz_QT_VERSION} EXACT REQUIRED Core Widgets)
+  ## make target_link_libraries(${QT_LIBRARIES}) pull in all required dependencies
+  set(QT_LIBRARIES Qt5::Core Qt5::Widgets)
+  qt5_wrap_cpp(QT_MOC include/status_panel/status_panel.h)
+endif()
+
+add_definitions(-DQT_NO_KEYWORDS)
 
 # FILES ########################################
 
@@ -27,22 +43,12 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
   include/
 )
-FILE(GLOB HFILES include/${PROJECT_NAME}/*.h)
-FILE(GLOB CPPFILES src/*.cpp)
-qt4_wrap_cpp(MOC_FILES
-  include/${PROJECT_NAME}/status_panel.h
-)
-set(SOURCE_FILES
-  ${CPPFILES}
-  ${MOC_FILES}
-)
+set(SOURCES src/status_panel.cpp src/status_logger.cpp ${QT_MOC})
 
 # LIBRARY ########################################
-add_library(${PROJECT_NAME} ${SOURCE_FILES})
+add_library(${PROJECT_NAME} ${SOURCES})
 
 target_link_libraries(${PROJECT_NAME} ${QT_LIBRARIES} ${catkin_LIBRARIES})
-
-# INSTALL ########################################
 
 install(TARGETS
   ${PROJECT_NAME}
@@ -51,7 +57,7 @@ install(TARGETS
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
-install(FILES 
+install(FILES
   plugin_description.xml
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
 
