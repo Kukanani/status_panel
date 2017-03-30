@@ -11,7 +11,6 @@ catkin_package(
   INCLUDE_DIRS include
   LIBRARIES ${PROJECT_NAME}
   CATKIN_DEPENDS std_msgs
-  DEPENDS yaml-cpp
 )
 
 # QT ########################################
